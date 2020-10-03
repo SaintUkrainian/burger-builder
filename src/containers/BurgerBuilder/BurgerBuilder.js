@@ -7,8 +7,6 @@ import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Backdrop from "../../components/UI/Backdrop/Backdrop";
 
-
-
 const INGREDIENT_PRICES = {
     salad: 1,
     bacon: 4.5,
@@ -51,12 +49,16 @@ class BurgerBuilder extends Component {
     };
 
     showModal = () => {
-        this.setState({showModal: true});
-    }
+        this.setState({ showModal: true });
+    };
 
     closeModal = () => {
-        this.setState({showModal: false});
-    }
+        this.setState({ showModal: false });
+    };
+
+    checkOutHandler = () => {
+        alert("Purchased!");
+    };
 
     removeIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
@@ -82,7 +84,7 @@ class BurgerBuilder extends Component {
     };
 
     render() {
-        const disabledInfo = {...this.state.ingredients};
+        const disabledInfo = { ...this.state.ingredients };
 
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0;
@@ -90,9 +92,17 @@ class BurgerBuilder extends Component {
 
         return (
             <Aux>
-                <Backdrop show={this.state.showModal} closeModal={this.closeModal}/>
+                <Backdrop
+                    show={this.state.showModal}
+                    closeModal={this.closeModal}
+                />
                 <Modal show={this.state.showModal} closeModal={this.closeModal}>
-                    <OrderSummary ingredients={this.state.ingredients} />
+                    <OrderSummary
+                        ingredients={this.state.ingredients}
+                        totalPrice={this.state.totalPrice}
+                        cancel={this.closeModal}
+                        checkOut={this.checkOutHandler}
+                    />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
