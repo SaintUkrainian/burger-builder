@@ -6,6 +6,8 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Backdrop from "../../components/UI/Backdrop/Backdrop";
+import axios from "../../axios-for-orders";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 const INGREDIENT_PRICES = {
     salad: 1,
@@ -25,6 +27,7 @@ class BurgerBuilder extends Component {
         totalAmount: 0,
         totalPrice: 1,
         showModal: false,
+        loading: false,
     };
 
     addIngredientHandler = (type) => {
@@ -57,7 +60,26 @@ class BurgerBuilder extends Component {
     };
 
     checkOutHandler = () => {
-        alert("Purchased!");
+        this.setState({ loading: true });
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            customer: {
+                name: "Denys Matsenko",
+                email: "idanchik47@gmail.com",
+                address: "Some street, 38a",
+                phone: "+133455357897",
+            },
+        };
+        axios
+            .post("/orders.json", order)
+            .then((response) => {
+                this.setState({ loading: false, showModal: false });
+                console.log(response);
+            })
+            .catch((err) => {
+                this.setState({ loading: false, showModal: false });
+            });
     };
 
     removeIngredientHandler = (type) => {
@@ -90,6 +112,19 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0;
         }
 
+        let orderSummary = (
+            <OrderSummary
+                ingredients={this.state.ingredients}
+                totalPrice={this.state.totalPrice}
+                cancel={this.closeModal}
+                checkOut={this.checkOutHandler}
+            />
+        );
+
+        if (this.state.loading) {
+            orderSummary = <Spinner />;
+        }
+
         return (
             <Aux>
                 <Backdrop
@@ -97,12 +132,7 @@ class BurgerBuilder extends Component {
                     closeModal={this.closeModal}
                 />
                 <Modal show={this.state.showModal} closeModal={this.closeModal}>
-                    <OrderSummary
-                        ingredients={this.state.ingredients}
-                        totalPrice={this.state.totalPrice}
-                        cancel={this.closeModal}
-                        checkOut={this.checkOutHandler}
-                    />
+                    {orderSummary}
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
