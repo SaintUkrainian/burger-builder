@@ -8,12 +8,18 @@ class OrderSummary extends Component {
 
     render () {
         const ingredientSummary = this.props.ingredients;
-        const listItems = Object.keys(ingredientSummary).map((key) => (
-            <li key={key}>
-                <span style={{ textTransform: "capitalize" }}>{key}</span>:{" "}
-                {ingredientSummary[key]}x
-            </li>
-        ));
+        let listItems;
+        if(!ingredientSummary) {
+            listItems = (<p>Sorry, couldn't get the data from the Web :(</p>);
+        } else {
+            listItems = Object.keys(ingredientSummary).map((key) => (
+                <li key={key}>
+                    <span style={{ textTransform: "capitalize" }}>{key}</span>:{" "}
+                    {ingredientSummary[key]}x
+                </li>
+            ));
+        }
+        
         return (
             <Aux>
                 <h3>Your Order</h3>

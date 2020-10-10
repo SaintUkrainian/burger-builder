@@ -4,7 +4,11 @@ import styles from "./Burger.module.css";
 import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 
 const burger = (props) => {
-    let transformedIngredients = Object.keys(props.ingredients)
+    let transformedIngredients
+    if(!props.ingredients) {
+        transformedIngredients = (<p>Getting ingredients from the Web!</p>);
+    } else {
+        transformedIngredients = Object.keys(props.ingredients)
         .map((key) => {
             return [...Array(props.ingredients[key])].map((_, i) => {
                 return <BurgerIngredient key={key + i} type={key} />;
@@ -13,6 +17,8 @@ const burger = (props) => {
         .reduce((arr, el) => {
             return arr.concat(el);
         }, []);
+    }
+    
 
     if (transformedIngredients.length === 0) {
         transformedIngredients = <p>Fill with ingredients!</p>;

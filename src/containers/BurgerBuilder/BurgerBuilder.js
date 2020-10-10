@@ -5,30 +5,38 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import Backdrop from "../../components/UI/Backdrop/Backdrop";
 import axios from "../../axios-for-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
-
-const INGREDIENT_PRICES = {
-    salad: 1,
-    bacon: 4.5,
-    meat: 5,
-    cheese: 2,
-};
+import withErrorHandling from "../../hoc/withErrorHandling/withErrorHandling";
 
 class BurgerBuilder extends Component {
     state = {
-        ingredients: {
-            salad: 0,
-            bacon: 0,
-            cheese: 0,
-            meat: 0,
-        },
+        ingredients: null,
+        ingredientPrices: null,
         totalAmount: 0,
         totalPrice: 1,
         showModal: false,
         loading: false,
+        fetchingData: false,
     };
+
+    componentDidMount() {
+        this.setState({fetchingData: true});
+        axios
+            .get(
+                "https://steel-sequencer-288911.firebaseio.com/ingredients.json"
+            )
+            .then((response) => {
+                console.log(response.data);
+                this.setState({ ingredients: response.data });
+            });
+        axios
+            .get("https://steel-sequencer-288911.firebaseio.com/prices.json")
+            .then((response) => {
+                console.log(response);
+                this.setState({ ingredientPrices: response.data, fetchingData: false});
+            });
+    }
 
     addIngredientHandler = (type) => {
         const oldCount = this.state.ingredients[type];
@@ -41,7 +49,7 @@ class BurgerBuilder extends Component {
         const oldTotalAmount = this.state.totalAmount;
         const newTotalAmount = oldTotalAmount + 1;
 
-        const priceAddition = INGREDIENT_PRICES[type];
+        const priceAddition = this.state.ingredientPrices[type];
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
         this.setState({
@@ -96,7 +104,7 @@ class BurgerBuilder extends Component {
         const newTotalAmount = oldTotalAmount - 1;
 
         const oldPrice = this.state.totalPrice;
-        const newPrice = oldPrice - INGREDIENT_PRICES[type];
+        const newPrice = oldPrice - this.state.ingredientPrices[type];
 
         this.setState({
             totalPrice: newPrice,
@@ -107,6 +115,7 @@ class BurgerBuilder extends Component {
 
     render() {
         const disabledInfo = { ...this.state.ingredients };
+        let fetched = null;
 
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0;
@@ -125,16 +134,22 @@ class BurgerBuilder extends Component {
             orderSummary = <Spinner />;
         }
 
+        if(this.state.fetchingData) {
+            fetched = (
+                <Aux>
+                    <Spinner />
+                </Aux>
+            );
+        } else {
+            fetched = <Burger ingredients={this.state.ingredients} />;
+        }
+
         return (
             <Aux>
-                <Backdrop
-                    show={this.state.showModal}
-                    closeModal={this.closeModal}
-                />
                 <Modal show={this.state.showModal} closeModal={this.closeModal}>
                     {orderSummary}
                 </Modal>
-                <Burger ingredients={this.state.ingredients} />
+                {fetched}
                 <BuildControls
                     addIngredient={this.addIngredientHandler}
                     removeIngredient={this.removeIngredientHandler}
@@ -148,4 +163,4 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default BurgerBuilder;
+export default withErrorHandling(BurgerBuilder, axios);
