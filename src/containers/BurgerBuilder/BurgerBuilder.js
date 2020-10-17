@@ -27,13 +27,11 @@ class BurgerBuilder extends Component {
                 "https://steel-sequencer-288911.firebaseio.com/ingredients.json"
             )
             .then((response) => {
-                console.log(response.data);
                 this.setState({ ingredients: response.data });
             });
         axios
             .get("https://steel-sequencer-288911.firebaseio.com/prices.json")
             .then((response) => {
-                console.log(response);
                 this.setState({ ingredientPrices: response.data, fetchingData: false});
             });
     }
@@ -83,7 +81,6 @@ class BurgerBuilder extends Component {
             .post("/orders.json", order)
             .then((response) => {
                 this.setState({ loading: false, showModal: false });
-                console.log(response);
             })
             .catch((err) => {
                 this.setState({ loading: false, showModal: false });
