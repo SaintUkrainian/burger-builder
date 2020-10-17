@@ -18,7 +18,7 @@ class Modal extends Component {
             <Aux>
                 <Backdrop
                     show={this.props.show}
-                    close={this.props.closeModal}
+                    closeModal={this.props.closeModal}
                 />
                 <div
                     className={styles.Modal}

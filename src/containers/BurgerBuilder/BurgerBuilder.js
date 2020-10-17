@@ -8,6 +8,7 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-for-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandling from "../../hoc/withErrorHandling/withErrorHandling";
+import { Redirect } from "react-router";
 
 class BurgerBuilder extends Component {
     state = {
@@ -66,25 +67,35 @@ class BurgerBuilder extends Component {
     };
 
     checkOutHandler = () => {
-        this.setState({ loading: true });
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: "Denys Matsenko",
-                email: "idanchik47@gmail.com",
-                address: "Some street, 38a",
-                phone: "+133455357897",
-            },
-        };
-        axios
-            .post("/orders.json", order)
-            .then((response) => {
-                this.setState({ loading: false, showModal: false });
-            })
-            .catch((err) => {
-                this.setState({ loading: false, showModal: false });
-            });
+        // this.setState({ loading: true });
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: "Denys Matsenko",
+        //         email: "idanchik47@gmail.com",
+        //         address: "Some street, 38a",
+        //         phone: "+133455357897",
+        //     },
+        // };
+        // axios
+        //     .post("/orders.json", order)
+        //     .then((response) => {
+        //         this.setState({ loading: false, showModal: false });
+        //     })
+        //     .catch((err) => {
+        //         this.setState({ loading: false, showModal: false });
+        //     });
+
+        const queryParams = [];
+        for (const key in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(key) + "=" + encodeURIComponent(this.state.ingredients[key]));
+        }
+        const queryString = queryParams.join("&");
+        this.props.history.push({
+            pathname: "/checkout",
+            search: "?" + queryString,
+        });
     };
 
     removeIngredientHandler = (type) => {
