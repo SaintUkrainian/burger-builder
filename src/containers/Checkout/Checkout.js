@@ -18,7 +18,11 @@ class Checkout extends Component {
         console.log(this.props.location.search);
         console.log(query);
         for (const param of query.entries()) {
-            ingredients[param[0]] = +param[1];
+            if(param[0] === "totalPrice") {
+                this.setState({price: +param[1]})
+            } else {
+                ingredients[param[0]] = +param[1];
+            }
         }
         console.log(ingredients);
         this.setState({ingredients: ingredients})
@@ -28,7 +32,7 @@ class Checkout extends Component {
         return (
             <div>
                 <CheckoutSummary ingredients={this.state.ingredients}/>
-                <Route path={this.props.match.url + "/contact-info"}component={ContactInfo} />
+                <Route path={this.props.match.url + "/contact-info"} render={() => (<ContactInfo ingredients={this.state.ingredients} price={this.state.price}/>)} />
             </div>
         );
     } 

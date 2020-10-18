@@ -8,7 +8,6 @@ import { withRouter } from "react-router-dom";
 import styles from "./CheckoutSummary.module.css";
 
 const checkoutSummary = (props) => {
-    console.log(props);
     return (
         <div className={styles.CheckoutSummary}>
             <h1>It will taste perfect, won't it?</h1>

@@ -10,9 +10,9 @@ const burger = (props) => {
     } else {
         transformedIngredients = Object.keys(props.ingredients)
         .map((key) => {
-            return [...Array(props.ingredients[key])].map((_, i) => {
-                return <BurgerIngredient key={key + i} type={key} />;
-            });
+                return [...Array(props.ingredients[key])].map((_, i) => {
+                    return <BurgerIngredient key={key + i} type={key} />;
+                });
         })
         .reduce((arr, el) => {
             return arr.concat(el);
