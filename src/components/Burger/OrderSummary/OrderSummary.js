@@ -1,6 +1,5 @@
 import React from "react";
 import { Component } from "react";
-import { Link } from "react-router-dom";
 
 import Aux from "../../../hoc/Auxilary/Auxilary";
 import Button from "../../UI/Button/Button";

@@ -8,7 +8,6 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-for-orders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandling from "../../hoc/withErrorHandling/withErrorHandling";
-import { Redirect } from "react-router";
 
 class BurgerBuilder extends Component {
     state = {
