@@ -17,3 +17,11 @@
     outline: none;
     background-color: #ccc;
 }
+
+.Invalid input {
+    border: 2px solid red;
+}
+
+.Valid input {
+    border: 2px solid lightgreen;
+}

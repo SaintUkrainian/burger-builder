@@ -85,13 +85,16 @@ class ContactInfo extends Component {
                         type="text"
                         name="name"
                         placeholder="Enter your name"
+                        valid={this.state.customer.name.valid}
                         onChange={(event) => this.inputChangeHandler(event, "name")}
                         value={this.state.customer.name.value}
+
                     />
                     <Input
                         type="text"
                         name="email"
                         placeholder="Enter your email"
+                        valid={this.state.customer.email.valid}
                         onChange={(event) => this.inputChangeHandler(event, "email")}
                         value={this.state.customer.email.value}
                     />
@@ -99,6 +102,7 @@ class ContactInfo extends Component {
                         type="text"
                         name="address"
                         placeholder="Address ('1905 year street')"
+                        valid={this.state.customer.address.valid}
                         onChange={(event) => this.inputChangeHandler(event, "address")}
                         value={this.state.customer.address.value}
                     />
