@@ -29,19 +29,20 @@ class Orders extends Component {
     }
 
     render() {
+
+        let myOrders = null;
+
+        if(this.state.loading) {
+            myOrders = <Spinner />;
+        }
+
+        if(!this.state.loading) {
+            myOrders = this.state.orders.map(order => <Order key={Math.random()} ingredients={order.ingredients} price={order.price}/>)
+        }
+
         return (
             <div>
-                {this.state.loading ? (
-                    <Spinner />
-                ) : (
-                    this.state.orders.map((order) => (
-                        <Order
-                            key={Math.random()}
-                            ingredients={order.ingredients}
-                            price={order.price}
-                        />
-                    ))
-                )}
+                {myOrders}
                 {this.state.error ? <h1 style={{textAlign: "center"}}>An Error occured! Check your Internet connection.</h1> : null}
             </div>
         );

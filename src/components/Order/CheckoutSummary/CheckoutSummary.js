@@ -8,6 +8,14 @@ import { withRouter } from "react-router-dom";
 import styles from "./CheckoutSummary.module.css";
 
 const checkoutSummary = (props) => {
+    const continueHandler = () => {
+        if (props.price > 1) {
+            props.history.replace("/checkout/contact-info");
+        } else {
+            return;
+        }
+    };
+
     return (
         <div className={styles.CheckoutSummary}>
             <h1>It will taste perfect, won't it?</h1>
@@ -19,13 +27,7 @@ const checkoutSummary = (props) => {
                 name="CANCEL"
                 action={() => props.history.goBack()}
             />
-            <Button
-                type="Success"
-                name="CONTINUE!"
-                action={() => {
-                    props.history.replace("/checkout/contact-info");
-                }}
-            />
+            <Button type="Success" name="CONTINUE!" action={continueHandler} />
         </div>
     );
 };

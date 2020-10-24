@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Order.module.css";
 
 const order = (props) => {
-    const ingredsTransformed = Object.keys(props.ingredients)
+    const ingredsTransformed = Object.keys(props.ingredients == null ? {} : props.ingredients)
         .map((key) => key.toUpperCase() + " " + props.ingredients[key] + "x")
         .join(", ");
 
