@@ -6,6 +6,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import axios from "../../axios-for-orders";
 import Input from "../../components/UI/Input/Input";
 import { withRouter } from "react-router";
+import { connect } from "react-redux";
 
 class ContactInfo extends Component {
     state = {
@@ -42,8 +43,8 @@ class ContactInfo extends Component {
         this.setState({validationPassed:true});
         
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.price,
+            ingredients: this.props.ingreds,
+            price: this.props.ingredsPrice,
             customer: {
                 name: this.state.name.value,
                 email: this.state.email.value,
@@ -122,4 +123,11 @@ class ContactInfo extends Component {
     }
 }
 
-export default withRouter(ContactInfo);
+const mapStateToProps = state => {
+    return {
+        ingreds: state.ingredients,
+        ingredsPrice: state.totalPrice,
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(ContactInfo)) ;
