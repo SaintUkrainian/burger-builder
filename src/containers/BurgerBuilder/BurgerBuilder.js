@@ -10,12 +10,16 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandling from "../../hoc/withErrorHandling/withErrorHandling";
 import { connect } from "react-redux";
 
+import * as actions from "../../store/actions/burgerBuilder";
+
 class BurgerBuilder extends Component {
     state = {
         showModal: false,
-        loading: false,
-        fetchingData: false,
     };
+
+    componentDidMount() {
+        this.props.initIngredients();
+    }
 
     showModal = () => {
         this.setState({ showModal: true });
@@ -48,18 +52,12 @@ class BurgerBuilder extends Component {
             />
         );
 
-        if (this.state.loading) {
-            orderSummary = <Spinner />;
-        }
-
-        if (this.state.fetchingData) {
-            fetched = (
-                <Aux>
-                    <Spinner />
-                </Aux>
-            );
-        } else {
+        if(this.props.ingredients){
             fetched = <Burger ingredients={this.props.ingredients} />;
+        } else if(this.props.error){
+            fetched = <h1>An Error occured.</h1>;
+        } else if(this.props.ingredients === null) {
+            fetched = <Spinner />;
         }
 
         return (
@@ -84,15 +82,17 @@ const mapStateToProps = (state) => {
     return {
         ingredients: state.ingredients,
         totalPrice: state.totalPrice,
+        error: state.error,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addIngredientHandler: (ingredientType) =>
-            dispatch({ type: "add", ingredient: ingredientType }),
+            dispatch(actions.addIngredient(ingredientType)),
         removeIngredientHandler: (ingredientType) =>
-            dispatch({ type: "remove", ingredient: ingredientType }),
+            dispatch(actions.removeIngredient(ingredientType)),
+        initIngredients:() => dispatch(actions.initIngredients()),
     };
 };
 

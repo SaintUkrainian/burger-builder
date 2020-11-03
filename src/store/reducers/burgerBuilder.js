@@ -1,11 +1,7 @@
 const initialState = {
-    ingredients: {
-        salad: 0,
-        bacon: 0,
-        cheese: 0,
-        meat: 0,
-    },
+    ingredients: null,
     totalPrice: 0,
+    error: false,
 };
 
 const ingredientPrices = {
@@ -13,7 +9,7 @@ const ingredientPrices = {
     bacon: 2,
     cheese: 1,
     meat: 3,
-}
+};
 
 const reducer = (state = initialState, action) => {
     // eslint-disable-next-line default-case
@@ -26,7 +22,8 @@ const reducer = (state = initialState, action) => {
                     [action.ingredient]:
                         state.ingredients[action.ingredient] + 1,
                 },
-                totalPrice: state.totalPrice + ingredientPrices[action.ingredient],
+                totalPrice:
+                    state.totalPrice + ingredientPrices[action.ingredient],
             };
         case "remove":
             return {
@@ -36,7 +33,23 @@ const reducer = (state = initialState, action) => {
                     [action.ingredient]:
                         state.ingredients[action.ingredient] - 1,
                 },
-                totalPrice: state.totalPrice - ingredientPrices[action.ingredient],
+                totalPrice:
+                    state.totalPrice - ingredientPrices[action.ingredient],
+            };
+        case "set":
+            return {
+                ...state,
+                ingredients: {
+                    salad: action.ingredients.salad,
+                    bacon: action.ingredients.bacon,
+                    cheese: action.ingredients.cheese,
+                    meat: action.ingredients.meat,
+                },
+            };
+        case "error":
+            return {
+                ...state,
+                error: action.error,
             };
         default:
             return state;
