@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Route } from "react-router";
+import { Route, Redirect } from "react-router";
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import ContactInfo from "../ContactInfo/ContactInfo";
@@ -8,9 +8,11 @@ import ContactInfo from "../ContactInfo/ContactInfo";
 
 class Checkout extends Component {
 
+
     render() {
         return (
             <div>
+                {this.props.price ? null : <Redirect to="/burger" />}
                 <CheckoutSummary ingredients={this.props.ingreds} price={this.props.price}/>
                 <Route path={this.props.match.url + "/contact-info"} component={ContactInfo} />
             </div>
@@ -20,8 +22,8 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingreds: state.ingredients,
-        price: state.totalPrice,
+        ingreds: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
     }
 }
 

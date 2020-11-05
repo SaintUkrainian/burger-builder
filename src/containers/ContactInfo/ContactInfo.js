@@ -5,10 +5,19 @@ import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import axios from "../../axios-for-orders";
 import Input from "../../components/UI/Input/Input";
-import { withRouter } from "react-router";
+import { withRouter, Redirect } from "react-router";
 import { connect } from "react-redux";
+import withError from "../../hoc/withErrorHandling/withErrorHandling";
+import * as actions from "../../store/actions/order";
+
 
 class ContactInfo extends Component {
+
+    constructor(props) {
+        super(props);
+        this.props.initPurchasing();
+    }
+
     state = {
         customer: {
             name: {
@@ -51,15 +60,7 @@ class ContactInfo extends Component {
                 address: this.state.address.value,
             },
         };
-        axios
-            .post("/orders.json", order)
-            .then((response) => {
-                this.setState({ loading: false });
-                this.props.history.push("/burger");
-            })
-            .catch((err) => {
-                this.setState({ loading: false });
-            });
+        this.props.purchase(order);
     };
 
     isValid = (element, regex) => {
@@ -78,15 +79,17 @@ class ContactInfo extends Component {
     }
 
     render() {
+        console.log(this.props.purchased);
         const form = (
             <React.Fragment>
+                {this.props.purchased ? <Redirect to="/burger" /> : null}
                 <h3>Enter your contact information</h3>
                 <form onSubmit={this.orderHandler}>
                     <Input
                         type="text"
                         name="name"
                         placeholder="Enter your name"
-                        valid={this.state.customer.name.valid}
+                        valid={this.state.customer.name.valid.toString()}
                         onChange={(event) => this.inputChangeHandler(event, "name")}
                         value={this.state.customer.name.value}
 
@@ -95,7 +98,7 @@ class ContactInfo extends Component {
                         type="text"
                         name="email"
                         placeholder="Enter your email"
-                        valid={this.state.customer.email.valid}
+                        valid={this.state.customer.email.valid.toString()}
                         onChange={(event) => this.inputChangeHandler(event, "email")}
                         value={this.state.customer.email.value}
                     />
@@ -103,7 +106,7 @@ class ContactInfo extends Component {
                         type="text"
                         name="address"
                         placeholder="Address ('1905 year street')"
-                        valid={this.state.customer.address.valid}
+                        valid={this.state.customer.address.valid.toString()}
                         onChange={(event) => this.inputChangeHandler(event, "address")}
                         value={this.state.customer.address.value}
                     />
@@ -116,7 +119,7 @@ class ContactInfo extends Component {
         );
         return (
             <div className={styles.ContactInfo}>
-                {this.state.loading ? <Spinner /> : form}
+                {this.props.purchasing ? <Spinner /> : form}
                 {this.state.validationPassed === false ? <h1 style={{color: "red", fontSize: "20px"}}>Form filled wrong!</h1> : null}
             </div>
         );
@@ -125,9 +128,18 @@ class ContactInfo extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingreds: state.ingredients,
-        ingredsPrice: state.totalPrice,
+        ingreds: state.burgerBuilder.ingredients,
+        ingredsPrice: state.burgerBuilder.totalPrice,
+        purchasing: state.order.purchasing,
+        purchased: state.order.purchased,
     }
 }
 
-export default connect(mapStateToProps)(withRouter(ContactInfo)) ;
+const mapDispatchToProps = dispatch => {
+    return {
+        purchase: (orderData) => dispatch(actions.purchaseBurgerStart(orderData)),
+        initPurchasing: () => dispatch(actions.purchaseInit()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withError(ContactInfo,axios)));

@@ -10,7 +10,7 @@ import styles from "./CheckoutSummary.module.css";
 
 const checkoutSummary = (props) => {
     const continueHandler = () => {
-        if (props.ingredsPrice > 1) {
+        if (props.ingredsPrice >= 1) {
             props.history.replace("/checkout/contact-info");
         } else {
             return;
@@ -26,7 +26,7 @@ const checkoutSummary = (props) => {
             <Button
                 type="Danger"
                 name="CANCEL"
-                action={() => props.history.goBack()}
+                action={() => props.history.push("/burger")}
             />
             <Button type="Success" name="CONTINUE!" action={continueHandler} />
         </div>
@@ -35,8 +35,8 @@ const checkoutSummary = (props) => {
 
 const mapStateToProps = state => {
     return {
-        ingreds: state.ingredients,
-        ingredsPrice: state.totalPrice,
+        ingreds: state.burgerBuilder.ingredients,
+        ingredsPrice: state.burgerBuilder.totalPrice,
     }
 }
 
