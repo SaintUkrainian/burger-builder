@@ -6,19 +6,22 @@ import styles from "./Layout.module.css";
 import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
 
 class Layout extends Component {
-    state = {show: false};
+    state = { show: false };
     closeModalHandler = () => {
-        this.setState({show: false});
-    }
+        this.setState({ show: false });
+    };
 
     openModalHandler = () => {
-        this.setState({show: true});
-    }
+        this.setState({ show: true });
+    };
     render() {
         return (
             <Aux>
-                <SideDrawer show={this.state.show} closeModal={this.closeModalHandler} />
-                <Toolbar openModal={this.openModalHandler}/>
+                <SideDrawer
+                    show={this.state.show}
+                    closeModal={this.closeModalHandler}
+                />
+                <Toolbar openModal={this.openModalHandler} />
                 <main className={styles.Content}>{this.props.children}</main>
             </Aux>
         );

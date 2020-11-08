@@ -1,0 +1,51 @@
+.Auth {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+}
+
+.Auth form {
+    margin: auto;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background-color: rgb(223, 186, 84);
+    width: 400px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.Auth form button {
+    margin: auto;
+    padding: 5px 10px;
+    background-color: #eee;
+    border: 2px solid #ccc;
+    font-family: sans-serif;
+    font-size: 20px;
+    border-radius: 7px;
+    color: rgb(102, 85, 62);
+    outline: none;
+}
+
+.Auth form button:hover {
+    background-color: #ccc;
+}
+
+.Auth button {
+    margin: auto;
+    background-color: #e6b927;
+    color: rgb(145, 77, 14);
+    border: 2px solid rgb(145, 77, 14);
+    padding: 5px 10px;
+    outline: none;
+    font-size: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.Auth button:hover {
+    background-color: #e4c970;
+}
