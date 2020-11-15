@@ -12,12 +12,6 @@ import * as actions from "../../store/actions/order";
 
 
 class ContactInfo extends Component {
-
-    constructor(props) {
-        super(props);
-        this.props.initPurchasing();
-    }
-
     state = {
         customer: {
             name: {
@@ -28,7 +22,7 @@ class ContactInfo extends Component {
             email: {
                 value: "",
                 valid: false,
-                regex: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                regex: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
             },
             address: {
                 value: "",
@@ -60,7 +54,7 @@ class ContactInfo extends Component {
                 address: this.state.address.value,
             },
         };
-        this.props.purchase(order);
+        this.props.purchase(order, this.props.token);
     };
 
     isValid = (element, regex) => {
@@ -132,12 +126,13 @@ const mapStateToProps = state => {
         ingredsPrice: state.burgerBuilder.totalPrice,
         purchasing: state.order.purchasing,
         purchased: state.order.purchased,
+        token: state.auth.token,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        purchase: (orderData) => dispatch(actions.purchaseBurgerStart(orderData)),
+        purchase: (orderData, token) => dispatch(actions.purchaseBurgerStart(orderData, token)),
         initPurchasing: () => dispatch(actions.purchaseInit()),
     }
 }

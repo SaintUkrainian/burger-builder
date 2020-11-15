@@ -6,17 +6,15 @@ import Button from "../../UI/Button/Button";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+import * as actions from "../../../store/actions/order";
+
 import styles from "./CheckoutSummary.module.css";
 
 const checkoutSummary = (props) => {
     const continueHandler = () => {
-        if (props.ingredsPrice >= 1) {
-            props.history.replace("/checkout/contact-info");
-        } else {
-            return;
-        }
+        props.initPurchasing();
+        props.history.replace("/checkout/contact-info");
     };
-
     return (
         <div className={styles.CheckoutSummary}>
             <h1>It will taste perfect, won't it?</h1>
@@ -33,11 +31,17 @@ const checkoutSummary = (props) => {
     );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         ingreds: state.burgerBuilder.ingredients,
         ingredsPrice: state.burgerBuilder.totalPrice,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        initPurchasing: () => dispatch(actions.purchaseInit()),
     }
 }
 
-export default connect(mapStateToProps)(withRouter(checkoutSummary));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(checkoutSummary));

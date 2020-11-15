@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import AuthInput from "../../components/UI/Input/AuthInput/authInput";
-import Backdrop from "../../components/UI/Backdrop/Backdrop";
 import styles from "./Auth.module.css";
 import * as actions from "../../store/actions/auth";
 import { connect } from "react-redux";

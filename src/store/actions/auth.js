@@ -24,6 +24,19 @@ export const clearError = () => {
     }
 }
 
+export const logout = () => {
+    return {
+        type: "logout",
+
+    }
+}
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => dispatch(logout()), expirationTime * 1000);
+    }
+}
+
 export const login = (email, password, signInMode) => {
     return (dispatch) => {
         dispatch(loginStart());
@@ -39,6 +52,7 @@ export const login = (email, password, signInMode) => {
             .then((repsonse) => {
                 console.log(repsonse);
                 dispatch(loginSuccess(repsonse.data));
+                dispatch(checkAuthTimeout(repsonse.data.expiresIn));
             })
             .catch((error) => {
                 console.log(error);

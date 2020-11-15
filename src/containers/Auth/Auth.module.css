@@ -36,7 +36,7 @@
 
 .Auth button {
     margin: auto;
-    background-color: #e6b927;
+    background-color: #e6c350;
     color: rgb(145, 77, 14);
     border: 2px solid rgb(145, 77, 14);
     padding: 5px 10px;
@@ -47,5 +47,5 @@
 }
 
 .Auth button:hover {
-    background-color: #e4c970;
+    background-color: #e7d59b;
 }

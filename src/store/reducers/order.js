@@ -1,5 +1,3 @@
-
-
 const initialState = {
     orders: null,
     fetchedOrders: false,
@@ -18,10 +16,12 @@ const reducer = (state = initialState, action) => {
         case "order_fail": return {
             ...state, 
             purchasing: false,
+            purchased: false,
         }; 
         case "start_purchasing": return {
             ...state,
             purchasing: true,
+            purchased: false,
         }
         case "purchase_init": return {
             ...state,
