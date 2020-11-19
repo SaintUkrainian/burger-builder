@@ -3,6 +3,7 @@ const initialState = {
     fetchedOrders: false,
     purchasing: false,
     purchased: false,
+    error: false,
 }
 
 
@@ -31,6 +32,12 @@ const reducer = (state = initialState, action) => {
             ...state,
             orders: action.value,
             fetchedOrders: true,
+            error: false,
+        }
+        case "init_auth_fail": return {
+            ...state,
+            fetchedOrders: false,
+            error: true,
         }
         default: return state;
     }

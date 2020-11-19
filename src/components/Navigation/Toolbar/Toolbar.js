@@ -11,7 +11,7 @@ const toolbar = (props) => {
             <DrawerToggle openModal={props.openModal} />
             <Logo height="80%" />
             <div className={styles.DesktopOnly}>
-                <NavItems />
+                <NavItems token={props.token} />
             </div>
         </header>
     );

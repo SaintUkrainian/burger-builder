@@ -8,7 +8,6 @@ import * as actions from "../../store/actions/order";
 import withError from "../../hoc/withErrorHandling/withErrorHandling";
 
 class Orders extends Component {
-
     componentDidMount() {
         this.props.initOrders(this.props.token);
     }
@@ -19,10 +18,7 @@ class Orders extends Component {
 
         if (!this.props.ordersFetched) {
             myOrders = <Spinner />;
-        }
-
-        if (this.props.ordersFetched) {
-            
+        } else if (this.props.ordersFetched) {
             if (this.props.orders.length === 0) {
                 myOrders = <h1>You don't have any orders yet :(</h1>;
             } else {
@@ -34,6 +30,9 @@ class Orders extends Component {
                     />
                 ));
             }
+        } 
+        if(this.props.error) {
+            myOrders = <h1>You are not authorized!</h1>;
         }
 
         return <div>{myOrders}</div>;
@@ -45,6 +44,7 @@ const mapStateToProps = (state) => {
         orders: state.order.orders,
         ordersFetched: state.order.fetchedOrders,
         token: state.auth.token,
+        error: state.order.error,
     };
 };
 

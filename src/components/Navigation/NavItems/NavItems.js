@@ -4,15 +4,17 @@ import styles from "./NavItems.module.css";
 import NavItem from "./NavItem/NavItem";
 
 const navItems = (props) => {
-
     return (
         <ul className={styles.NavItems}>
-            <NavItem link="/burger" >BurgerBuilder</NavItem>
+            <NavItem link="/burger">BurgerBuilder</NavItem>
             <NavItem link="/my-orders">My Orders</NavItem>
-            <NavItem link="/auth">Sign Up</NavItem>
+            {!props.token ? (
+                <NavItem link="/auth">Sign Up</NavItem>
+            ) : (
+                <NavItem link="/logout">Logout</NavItem>
+            )}
         </ul>
     );
-
-}
+};
 
 export default navItems;

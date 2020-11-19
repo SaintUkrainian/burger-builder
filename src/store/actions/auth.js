@@ -27,7 +27,6 @@ export const clearError = () => {
 export const logout = () => {
     return {
         type: "logout",
-
     }
 }
 

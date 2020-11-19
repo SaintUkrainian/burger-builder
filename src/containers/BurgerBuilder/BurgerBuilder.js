@@ -72,6 +72,7 @@ class BurgerBuilder extends Component {
                     disabled={disabledInfo}
                     price={this.props.totalPrice}
                     showModal={this.showModal}
+                    token={this.props.token}
                 />
             </Aux>
         );
@@ -83,6 +84,7 @@ const mapStateToProps = (state) => {
         ingredients: state.burgerBuilder.ingredients,
         totalPrice: state.burgerBuilder.totalPrice,
         error: state.burgerBuilder.error,
+        token: state.auth.token,
     };
 };
 

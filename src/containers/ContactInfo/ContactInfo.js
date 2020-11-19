@@ -35,26 +35,31 @@ class ContactInfo extends Component {
     };
 
     orderHandler = (event) => {
-        event.preventDefault();
-        for (const key in this.state.customer) {
-            if(!this.state.customer[key].valid) {
-                this.setState({validationPassed: false})
-                return;
+        if(!this.props.token) {
+            event.preventDefault();
+            return;
+        } else {
+            console.log(this.props.token)
+            for (const key in this.state.customer) {
+                if(!this.state.customer[key].valid) {
+                    this.setState({validationPassed: false})
+                    return;
+                }
             }
+            this.setState({ loading: true });
+            this.setState({validationPassed:true});
+            
+            const order = {
+                ingredients: this.props.ingreds,
+                price: this.props.ingredsPrice,
+                customer: {
+                    name: this.state.name.value,
+                    email: this.state.email.value,
+                    address: this.state.address.value,
+                },
+            };
+            this.props.purchase(order, this.props.token);
         }
-        this.setState({ loading: true });
-        this.setState({validationPassed:true});
-        
-        const order = {
-            ingredients: this.props.ingreds,
-            price: this.props.ingredsPrice,
-            customer: {
-                name: this.state.name.value,
-                email: this.state.email.value,
-                address: this.state.address.value,
-            },
-        };
-        this.props.purchase(order, this.props.token);
     };
 
     isValid = (element, regex) => {

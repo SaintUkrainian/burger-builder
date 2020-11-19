@@ -6,6 +6,8 @@ import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import Checkout from "./containers/Checkout/Checkout";
 import Orders from "./containers/Orders/Orders";
 import Auth from "./containers/Auth/Auth";
+import Logout from "./containers/Auth/Logout/Logout";
+import { connect } from "react-redux";
 
 class App extends Component {
     render() {
@@ -16,6 +18,7 @@ class App extends Component {
                         <Route path="/checkout" component={Checkout} />
                         <Route path="/my-orders" component={Orders} />
                         <Route path="/auth" component={Auth} />
+                        <Route path="/logout" component={Logout} />
                         <Redirect from="/" to="/burger"/>
                     </Switch>
                 </Layout>
@@ -23,4 +26,10 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token,
+    }
+}
+
+export default connect(mapStateToProps)(App);

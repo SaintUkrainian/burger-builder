@@ -12,7 +12,6 @@ const controls = [
 
 
 const buildControls = (props) => {
-
     return (
         <div className={styles.BuildControls}>
             <p>Total price: <strong>${props.price.toFixed(2)}</strong></p>
@@ -26,7 +25,7 @@ const buildControls = (props) => {
                     disabled={props.disabled[item.type]}
                 />
             ))}
-            <button onClick={props.showModal} className={styles.OrderButton} disabled={!(props.price >= 1)}>ORDER NOW!</button>
+            {props.token ? <button onClick={props.showModal} className={styles.OrderButton} disabled={!(props.price >= 2)}>ORDER NOW!</button> : <button className={styles.OrderButton} onClick={() => console.log("redirecting")}>Sign In</button>} 
         </div>
     );
 };
