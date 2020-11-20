@@ -4,6 +4,7 @@ import styles from "./Auth.module.css";
 import * as actions from "../../store/actions/auth";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import { Redirect } from "react-router";
 
 class Auth extends Component {
     state = {
@@ -76,6 +77,7 @@ class Auth extends Component {
         return (
             <React.Fragment>
                 {/* <Backdrop show/> */}
+                {this.props.token && this.props.burgerPrice >= 2 ? <Redirect to="/checkout" /> : this.props.token ? <Redirect to="/burger" /> : null}
                 {this.props.loading ? (
                     <Spinner />
                 ) : (
@@ -144,6 +146,7 @@ const mapStateToProps = (state) => {
         userId: state.auth.userId,
         loading: state.auth.loading,
         error: state.auth.error,
+        burgerPrice: state.burgerBuilder.totalPrice,
     };
 };
 

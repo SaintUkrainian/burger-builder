@@ -7,6 +7,7 @@ import Backdrop from "../../UI/Backdrop/Backdrop";
 import Aux from "../../../hoc/Auxilary/Auxilary";
 
 const sideDrawer = (props) => {
+    console.log("in sidedrawer");
     
     return (
         <Aux>
@@ -14,7 +15,7 @@ const sideDrawer = (props) => {
         <div className={[styles.SideDrawer, props.show ? styles.Open: styles.Close].join(" ")}>
                 <Logo height="11%" margin="32px"/>
             <nav>
-                <NavItems />
+                <NavItems token={props.token}/>
             </nav>
         </div>
         </Aux>

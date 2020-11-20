@@ -21,6 +21,7 @@ class Layout extends Component {
                 <SideDrawer
                     show={this.state.show}
                     closeModal={this.closeModalHandler}
+                    token={this.props.token}
                 />
                 <Toolbar token={this.props.token} openModal={this.openModalHandler} />
                 <main className={styles.Content}>{this.props.children}</main>

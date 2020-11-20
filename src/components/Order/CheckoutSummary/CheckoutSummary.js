@@ -3,7 +3,7 @@ import React from "react";
 import Burger from "../../Burger/Burger";
 import Button from "../../UI/Button/Button";
 
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import * as actions from "../../../store/actions/order";
@@ -17,6 +17,7 @@ const checkoutSummary = (props) => {
     };
     return (
         <div className={styles.CheckoutSummary}>
+            {props.token ? null : <Redirect to="/burger" />}
             <h1>It will taste perfect, won't it?</h1>
             <div style={{ width: "300px", margin: "auto" }}>
                 <Burger ingredients={props.ingreds} />
@@ -35,6 +36,7 @@ const mapStateToProps = (state) => {
     return {
         ingreds: state.burgerBuilder.ingredients,
         ingredsPrice: state.burgerBuilder.totalPrice,
+        token: state.auth.token,
     };
 };
 

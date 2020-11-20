@@ -6,6 +6,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
 import * as actions from "../../store/actions/order";
 import withError from "../../hoc/withErrorHandling/withErrorHandling";
+import { Redirect } from "react-router";
 
 class Orders extends Component {
     componentDidMount() {
@@ -35,7 +36,7 @@ class Orders extends Component {
             myOrders = <h1>You are not authorized!</h1>;
         }
 
-        return <div>{myOrders}</div>;
+        return <div>{this.props.token ? myOrders : <Redirect to="/burger" />}</div>;
     }
 }
 

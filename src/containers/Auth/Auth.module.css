@@ -49,3 +49,9 @@
 .Auth button:hover {
     background-color: #e7d59b;
 }
+
+@media (max-width: 600px) {
+    .Auth form {
+        width: 300px;
+    }
+}
