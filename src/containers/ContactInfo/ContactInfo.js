@@ -52,6 +52,7 @@ class ContactInfo extends Component {
             const order = {
                 ingredients: this.props.ingreds,
                 price: this.props.ingredsPrice,
+                userId: this.props.userId,
                 customer: {
                     name: this.state.name.value,
                     email: this.state.email.value,
@@ -132,6 +133,7 @@ const mapStateToProps = state => {
         purchasing: state.order.purchasing,
         purchased: state.order.purchased,
         token: state.auth.token,
+        userId: state.auth.userId,
     }
 }
 

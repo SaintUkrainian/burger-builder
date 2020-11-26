@@ -9,8 +9,9 @@ import withError from "../../hoc/withErrorHandling/withErrorHandling";
 import { Redirect } from "react-router";
 
 class Orders extends Component {
+
     componentDidMount() {
-        this.props.initOrders(this.props.token);
+        this.props.initOrders(this.props.token, this.props.userId);
     }
 
     render() {
@@ -46,12 +47,13 @@ const mapStateToProps = (state) => {
         ordersFetched: state.order.fetchedOrders,
         token: state.auth.token,
         error: state.order.error,
+        userId: state.auth.userId,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        initOrders: (token) => dispatch(actions.initOrders(token)),
+        initOrders: (token, userId) => dispatch(actions.initOrders(token, userId)),
     };
 };
 

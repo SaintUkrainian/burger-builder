@@ -1,6 +1,6 @@
 {
   "name": "burger-builder",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "homepage": "http://saintukrainian.github.io/burger-builder",
   "dependencies": {
