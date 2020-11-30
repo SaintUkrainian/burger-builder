@@ -56,7 +56,6 @@ export const purchaseBurgerStart = (orderData, token) => {
         axios
             .post("/orders.json?auth=" + token, orderData)
             .then((response) => {
-                console.log(response);
                 dispatch(purchaseBurgerSuccess());
             })
             .catch((error) => {

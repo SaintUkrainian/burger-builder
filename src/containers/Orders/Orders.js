@@ -16,7 +16,6 @@ class Orders extends Component {
 
     render() {
         let myOrders = null;
-        console.log(this.props.orders);
 
         if (!this.props.ordersFetched) {
             myOrders = <Spinner />;

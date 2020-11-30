@@ -52,7 +52,6 @@ export const login = (email, password, signInMode) => {
                 returnSecureToken: true,
             })
             .then((repsonse) => {
-                console.log(repsonse);
                 const expirationDate = new Date(
                     new Date().getTime() + repsonse.data.expiresIn * 1000
                 );
@@ -63,7 +62,6 @@ export const login = (email, password, signInMode) => {
                 dispatch(checkAuthTimeout(repsonse.data.expiresIn));
             })
             .catch((error) => {
-                console.log(error);
                 dispatch(loginFail(error));
             });
     };

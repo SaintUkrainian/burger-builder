@@ -39,7 +39,6 @@ class ContactInfo extends Component {
             event.preventDefault();
             return;
         } else {
-            console.log(this.props.token)
             for (const key in this.state.customer) {
                 if(!this.state.customer[key].valid) {
                     this.setState({validationPassed: false})
@@ -79,7 +78,6 @@ class ContactInfo extends Component {
     }
 
     render() {
-        console.log(this.props.purchased);
         const form = (
             <React.Fragment>
                 {this.props.purchased ? <Redirect to="/burger" /> : null}

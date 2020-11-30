@@ -7,7 +7,6 @@ import Backdrop from "../../UI/Backdrop/Backdrop";
 import Aux from "../../../hoc/Auxilary/Auxilary";
 
 const sideDrawer = (props) => {
-    console.log("in sidedrawer");
     
     return (
         <Aux>
